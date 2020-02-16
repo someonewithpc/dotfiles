@@ -131,7 +131,7 @@ if [ -n "$setup_users" ]; then
 
 	echo "Set hugo password"
 	read foo
-	arch-chroot /mnt useradd -m hugo -g users -G wheel
+	arch-chroot /mnt useradd -m hugo -g users -G wheel,video
 	arch-chroot /mnt passwd hugo
 
 	echo "Setup sudoers"
@@ -151,7 +151,7 @@ if [ -n "$bootloader" ]; then
 #	arch-chroot /mnt efibootmgr -d $disk -L Arch -c -w
 fi
 
-arch-chroot /mnt systemctl enable lightdm
+arch-chroot /mnt systemctl enable lightdm NetworkManager
 
 : > /mnt/etc/chrony
 for i in 0..3; do

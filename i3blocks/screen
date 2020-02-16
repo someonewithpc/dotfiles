@@ -1,0 +1,9 @@
+#!/bin/bash
+
+case $BLOCK_BUTTON in
+    3) redshift-adjust =6500 ;;  # right click, reset
+    4) redshift-adjust +100 ;;   # scroll up, increase
+    5) redshift-adjust -100 ;;   # scroll down, decrease
+esac
+
+echo "🔆 $(xbacklight -get)%  $(redshift-adjust -p)K"
