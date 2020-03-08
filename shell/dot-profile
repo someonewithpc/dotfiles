@@ -29,4 +29,6 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+# hugo
 setxkbmap us,pt -option "grp:switch" -option "caps:ctrl_modifier"
+export EDITOR=emacs
