@@ -1,0 +1,398 @@
+# vim:filetype=i3
+#
+# i3 config file
+#
+# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+#
+
+# Set mod key (Mod1=<Alt>, Mod4=<Super>)
+set $mod Mod4
+
+# set default desktop layout (default is tiling)
+# workspace_layout tabbed <stacking|tabbed>
+workspace_layout tabbed
+
+####################
+## Visual Section ##
+####################
+
+# Configure border style <normal|1pixel|pixel xx|none|pixel>
+#new_window pixel 1
+new_float normal
+
+# thin borders
+hide_edge_borders both
+
+# change borders
+#bindsym $mod+u border none
+#bindsym $mod+y border pixel 1
+#bindsym $mod+n border normal
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango:Hack 7
+
+#-> Colors
+# Use custom colors for black
+set $black       #282828
+set $darkblack   #1d2021
+set $transparent #000000
+
+set $bg-color            #444444
+set $inactive-bg-color   #2f343f
+set $text-color          #f3f4f5
+set $inactive-text-color #676E7D
+set $urgent-bg-color     #E53935
+
+# window colors
+#                       border             background         text                 indicator
+client.focused          $bg-color          $bg-color          $text-color          #00ff00
+client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color #00ff00
+client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color #00ff00
+client.urgent           $urgent-bg-color   $urgent-bg-color   $text-color          #00ff00
+
+#################
+## Bar Section ##
+#################
+bar {
+        status_command i3blocks -c /etc/i3/i3blocks.conf
+        colors {
+                background $inactive-bg-color
+                separator #757575
+                #                  border             background         text
+                focused_workspace  $bg-color          $bg-color          $text-color
+                inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color 
+                urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
+        }
+        position bottom
+}
+
+########################
+## Workspaces Section ##
+########################
+
+# Web, Downloads and Transfers     
+set $workspace1 "1 "
+set $workspace2 "2 "
+# Work GUI dependent     
+set $workspace3 "3 "
+# Development     
+set $workspace4 "4 "
+set $workspace5 "5 "
+set $workspace6 "6 "
+set $workspace7 "7  "
+set $workspace8 "8 "
+# Mailing and Chatting  (icons for smartphone handling ->  )
+set $workspace9 "9 "
+# Multimedia / Graphical Work   
+set $workspace10 "10 "
+
+# Open applications on specific workspaces
+assign [class="firefox"] $workspace2
+assign [class="Chromium"] $workspace2
+assign [class="Atril"] $workspace5
+assign [class="TelegramDesktop"] $workspace9
+assign [class="Hexchat"] $workspace8
+
+# Display the popup if it belongs to the fullscreen application only. This is
+# the default and should be reasonable behavior for most users.
+# Modes are smart|ignore|leave_fullscreen
+popup_during_fullscreen smart
+
+# Open specific applications in floating mode
+for_window [class="Qalculate-gtk"] floating enable border pixel 1
+for_window [class="GParted"] floating enable border normal
+for_window [title="i3_help"] floating enable sticky enable border normal
+for_window [class="Lightdm-gtk-greeter-settings"] floating enable
+for_window [class="Nitrogen"] floating enable sticky enable border normal
+for_window [class="^Xfrun4$"] floating enable
+for_window [class="^Xfce4-appfinder$"] floating enable
+no_focus   [class="^Xfce4-notifyd$" ]
+for_window [class="^cameraclient$"] floating enable
+for_window [class="^blueman-manager$"] floating enable
+for_window [class="^vlc$"] floating enable
+for_window [class="Vlc"] floating enable
+for_window [class="^Vlc$"] floating enable
+for_window [class="^Volumeicon$"] floating enable
+for_window [class="^Nm-connection-editor"] floating enable
+for_window [class="^gnuplot$"] floating enable
+for_window [title="[fF]igure.*"] floating enable
+for_window [class="Plantinek"] floating enable
+for_window [title="^Android Emulator"] floating enable
+
+##########################
+## Key-Bindings Section ##
+##########################
+
+#-> Workspace related
+
+# switch to workspace
+bindsym $mod+1 workspace $workspace1
+bindsym $mod+2 workspace $workspace2
+bindsym $mod+3 workspace $workspace3
+bindsym $mod+4 workspace $workspace4
+bindsym $mod+5 workspace $workspace5
+bindsym $mod+6 workspace $workspace6
+bindsym $mod+7 workspace $workspace7
+bindsym $mod+8 workspace $workspace8
+bindsym $mod+9 workspace $workspace9
+bindsym $mod+0 workspace $workspace10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $workspace1
+bindsym $mod+Shift+2 move container to workspace $workspace2
+bindsym $mod+Shift+3 move container to workspace $workspace3
+bindsym $mod+Shift+4 move container to workspace $workspace4
+bindsym $mod+Shift+5 move container to workspace $workspace5
+bindsym $mod+Shift+6 move container to workspace $workspace6
+bindsym $mod+Shift+7 move container to workspace $workspace7
+bindsym $mod+Shift+8 move container to workspace $workspace8
+bindsym $mod+Shift+9 move container to workspace $workspace9
+bindsym $mod+Shift+0 move container to workspace $workspace10
+
+# workspace back and forth (with/without active container)
+workspace_auto_back_and_forth no
+bindsym $mod+b workspace back_and_forth
+bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
+
+# Cycle through active workspaces
+bindsym $mod+Tab workspace next
+bindsym $mod+Shift+Tab workspace prev
+
+bindsym $mod+Shift+greater move workspace to output right
+bindsym $mod+Shift+less move workspace to output left
+
+# switch to workspace with urgent window automatically
+for_window [urgent=latest] focus
+
+# sticky window
+bindsym $mod+Shift+s sticky toggle
+
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+minus scratchpad show
+
+#-> General Behavior
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# # change focus (emacs like setup)
+# bindsym $mod+b focus left
+# bindsym $mod+n focus down
+# bindsym $mod+p focus up
+# bindsym $mod+f focus right
+
+# # move focused window (emacs like setup)
+# bindsym $mod+Shift+b move left
+# bindsym $mod+Shift+n move down
+# bindsym $mod+Shift+p move up
+# bindsym $mod+Shift+f move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# kill focused window
+bindsym $mod+Shift+q kill
+# Alias for the command above
+bindsym Mod1+F4 kill
+
+# split in horizontal orientation (VIM like setup)
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+bindsym $mod+c focus child
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# Resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+        # bindsym $mod+b resize shrink width 5 px or 5 ppt
+        # bindsym $mod+n resize grow height 5 px or 5 ppt
+        # bindsym $mod+p resize shrink height 5 px or 5 ppt
+        # bindsym $mod+f resize grow width 5 px or 5 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # exit resize mode: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+####################
+## System Control ##
+####################
+
+#--> Volume Control
+# Pulse Audio controls
+#increase sound volume and update
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume $(pactl list short sinks | fgrep RUNNING | cut -d$'\t' -f1) +5% && pkill -SIGRTMIN+10 i3blocks 
+#decrease sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume $(pactl list short sinks | fgrep RUNNING | cut -d$'\t' -f1) -5% && pkill -SIGRTMIN+10 i3blocks 
+ # mute sound
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle && pkill -SIGRTMIN+10 i3blocks 
+
+# Sreen brightness controls
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -perceived +2  && pkill -SIGRTMIN+12 i3blocks
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -perceived -2 && pkill -SIGRTMIN+12 i3blocks 
+# Screen temperature
+bindsym Shift+XF86MonBrightnessUp exec --no-startup-id redshift-adjust +100 && pkill -SIGRTMIN+11 i3blocks
+bindsym Shift+XF86MonBrightnessDown exec --no-startup-id redshift-adjust -100 && pkill -SIGRTMIN+11 i3blocks
+
+# Find cursor
+bindsym $mod+m exec --no-startup-id xfce4-find-cursor
+
+# Disable touchpad
+bindsym XF86TouchpadToggle exec --no-startup-id /etc/i3/scripts/touchpad.sh
+
+########################
+## Start Applications ##
+########################
+
+bindsym $mod+Return exec xfce4-terminal
+bindsym Ctrl+Mod1+t exec xfce4-terminal
+bindsym $mod+p exec xfce4-display-settings
+bindsym Print exec xfce4-screenshooter
+bindsym $mod+Shift+m exec xfce4-taskmanager
+bindsym $mod+Shift+t exec thunar
+bindsym Ctrl+Mod1+Escape --release exec --no-startup-id xkill
+bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
+bindsym $mod+Shift+f exec google-chrome-stable --enable-features=WebUIDarkMode --force-dark-mode
+bindsym $mod+Shift+e exec emacs
+
+################
+## Start Menu ##
+################
+
+# start dmenu (a program launcher)
+bindsym Mod1+F2 exec --no-startup-id dmenu_run
+
+# start j4-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+#bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+d exec --no-startup-id j4-dmenu-desktop [--dmenu="dmenu -i"] [--term="xfce4-terminal"]
+
+# launch categorized menu
+bindsym $mod+z exec --no-startup-id /etc/i3/scripts/morc_menu.sh
+
+################
+## Power Menu ##
+################
+
+# lock
+bindsym $mod+Shift+x exec light-locker-command -l
+# alias for the command above
+bindsym Ctrl+Mod1+l exec light-locker-command -l
+
+set $mode_system "System (l) lock, (e) logout, (s) suspend, (r) reboot, (Shift+s) shutdown"
+mode $mode_system {
+    bindsym l       exec --no-startup-id /etc/i3/scripts/exit_menu.sh lock, mode "default"
+    bindsym e       exec --no-startup-id /etc/i3/scripts/exit_menu.sh logout, mode "default"
+    bindsym s       exec --no-startup-id /etc/i3/scripts/exit_menu.sh suspend, mode "default"
+    bindsym r       exec --no-startup-id /etc/i3/scripts/exit_menu.sh reboot, mode "default"
+    bindsym Shift+s exec --no-startup-id /etc/i3/scripts/exit_menu.sh poweroff, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Pause mode $mode_system
+bindsym XF86Sleep  exec --no-startup-id ~/etc/i3/scripts/exit_menu.sh suspend, mode "default"
+
+
+############################
+## Autostart applications ##
+############################
+
+#-> System related
+exec --no-startup-id nm-applet &
+exec --no-startup-id parcellite &
+exec --no-startup-id blueman-applet &
+exec --no-startup-id redshift-gtk -m drm -l "41:-8" &
+exec --no-startup-id kdeconnect-indicator &
+exec --no-startup-id xfsettingsd &
+#exec --no-startup-id xfce4-power-manager &
+#exec --no-startup-id compton &
+exec --no-startup-id light-locker &
+#exec --no-startup-id nitrogen --restore &
+exec --no-startup-id nvoc -a &
+exec --no-startup-id pactl load-module module-bluetooth-discover &
+exec --no-startup-id /usr/lib/xfce-polkit/xfce-polkit &
+# exec --no-startup-id picom &
+
+#-> Convenience
+#exec --no-startup-id hexchat --minimize=2 &
+exec --no-startup-id /usr/bin/telegram-desktop -startintray &
+
+# exec --no-startup-id /usr/bin/aw-qt &
+
+#exec --no-startup-id /usr/bin/keepassxc &
+
+# Display Mode
+bindsym $mod+o mode "$mode_display"
+set $mode_display Ext Screen: (z) VGA, (x) HDMI, (c) External OFF
+
+mode "$mode_display" {
+    bindsym x mode "$mode_display_hdmi"
+    bindsym c exec --no-startup-id xrandr --output HDMI1,2 --same-as eDPI1, mode "default"
+
+    # Return to exit out, Escape to go back to external output
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+
+# HDMI settings
+set $mode_display_hdmi Ext Screen (HDMI): (z) On, (x) Mirrored
+# Set the shortcuts and what they do
+mode "$mode_display_hdmi" {
+    bindsym z exec --no-startup-id xrandr --output HDMI2 --auto --left-of eDPI1, mode "default"
+    bindsym x exec --no-startup-id xrandr --output HDMI2 --auto --output eDPI1 --auto --same-as HDMI2, mode "default"
+    bindsym c exec --no-startup-id xrandr --output HDMI2 --auto --off, mode "default"
+
+    # Return to exit out, Escape to go back to external output
+    bindsym Return mode "default"
+    bindsym Escape mode "$mode_display"
+}
