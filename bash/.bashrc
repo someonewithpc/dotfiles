@@ -2,7 +2,7 @@
 # not be an interactive login shell)
 if [ -d "$HOME/.local/bin" ]
 then
-	    PATH="$HOME/.local/bin:$PATH"
+	PATH="$HOME/.local/bin:$PATH"
 fi
 
 # ~/.bashrc: executed by bash(1) for non-login shells.
@@ -113,21 +113,21 @@ if ! shopt -oq posix; then
   fi
 fi
 
-docker_rm_containers() {
-    docker stop $(docker ps -aq)
-    docker rm $(docker container ls -aq)
-}
+# docker_rm_containers() {
+#     docker stop $(docker ps -aq)
+#     docker rm $(docker container ls -aq)
+# }
 
-docker_blast_it() {
-    docker_rm_containers
-    docker network prune -f
-    docker rmi -f $(docker images -aq)
-    docker volume rm $(docker volume ls -q)
-}
+# docker_blast_it() {
+#     docker_rm_containers
+#     docker network prune -f
+#     docker rmi -f $(docker images -aq)
+#     docker volume rm $(docker volume ls -q)
+# }
 
 
-export ANDROID_HOME="$HOME/Android/Sdk"
-export PATH="$PATH:$ANDROID_HOME/emulator"
-export PATH="$PATH:$ANDROID_HOME/tools"
-export PATH="$PATH:$ANDROID_HOME/tools/bin"
-export PATH="$PATH:$ANDROID_HOME/platform-tools"
+# export ANDROID_HOME="$HOME/Android/Sdk"
+# export PATH="$PATH:$ANDROID_HOME/emulator"
+# export PATH="$PATH:$ANDROID_HOME/tools"
+# export PATH="$PATH:$ANDROID_HOME/tools/bin"
+# export PATH="$PATH:$ANDROID_HOME/platform-tools"
