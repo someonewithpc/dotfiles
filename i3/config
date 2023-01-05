@@ -299,7 +299,7 @@ bindsym $mod+Shift+m exec xfce4-taskmanager
 bindsym $mod+Shift+t exec thunar
 bindsym Ctrl+Mod1+Escape --release exec --no-startup-id xkill
 bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
-bindsym $mod+Shift+f exec google-chrome-stable --enable-features=WebUIDarkMode --force-dark-mode
+bindsym $mod+Shift+f exec google-chrome-stable --enable-features=WebUIDarkMode --force-dark-mode --disable-gpu-vsync --enable-threaded-compositing
 bindsym $mod+Ctrl+Shift+e exec emacs
 bindsym $mod+Shift+e exec --no-startup-id /home/hugo/.local/bin/emacs-pool-client
 
@@ -341,6 +341,7 @@ mode $mode_system {
     bindsym Escape mode "default"
 }
 bindsym $mod+Pause mode $mode_system
+bindsym Ctrl+Mod1+Delete mode $mode_system
 bindsym XF86Sleep  exec --no-startup-id ~/etc/i3/scripts/exit_menu.sh suspend, mode "default"
 
 

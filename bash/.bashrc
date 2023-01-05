@@ -131,3 +131,12 @@ fi
 # export PATH="$PATH:$ANDROID_HOME/tools"
 # export PATH="$PATH:$ANDROID_HOME/tools/bin"
 # export PATH="$PATH:$ANDROID_HOME/platform-tools"
+
+export GTK_THEME=Adwaita:dark
+
+export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)" # set SSH_AUTH_SOCK
+gpg-connect-agent updatestartuptty /bye > /dev/null # help pgp find user tty for password prompts
+
+export EDITOR=emacs
+
+export LESS=-asrRix8
